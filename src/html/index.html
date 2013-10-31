@@ -7,7 +7,7 @@
 
 <body>
 
-<button onclick="javascript:update();">Update</button>
+
 
 <script src="http://192.168.1.8:9000/socket.io/socket.io.js"></script>
 <script>
@@ -15,10 +15,47 @@
     var i = 0;
 
     function update(){
-        socket.emit('update', {red : 0x22, orange : 0x44, yellow : 0x66, green : 0x88, blue : 0xAA, white : 0xCC });
+
+        var colorRed = document.getElementById("red").value;
+        var colorOrange = document.getElementById("orange").value;
+        var colorYellow = document.getElementById("yellow").value;
+        var colorGreen = document.getElementById("green").value;
+        var colorBlue = document.getElementById("blue").value;
+        var colorWhite = document.getElementById("white").value;
+        console.log("colorRed",colorRed);
+        socket.emit('update', {red : colorRed, orange : colorOrange, yellow : colorYellow, green : colorGreen, blue : colorBlue, white : colorWhite });
     }
 
 </script>
+
+<form>
+    <div>
+        <label for="red">Red</label>
+        <input id="red" type="range" name="points" min="0" max="255" onchange="update()">
+    </div>
+    <div>
+        <label for="orange">Orange</label>
+        <input id="orange" type="range" name="points" min="0" max="255" onchange="update()">
+    </div>
+    <div>
+        <label for="yellow">Yellow</label>
+        <input id="yellow" type="range" name="points" min="0" max="255" onchange="update()">
+    </div>
+    <div>
+        <label for="green">Green</label>
+        <input id="green" type="range" name="points" min="0" max="255" onchange="update()">
+    </div>
+    <div>
+        <label for="blue">Blue</label>
+        <input id="blue" type="range" name="points" min="0" max="255" onchange="update()">
+    </div><div>
+        <label for="white">White</label>
+        <input id="white" type="range" name="points" min="0" max="255" onchange="update()">
+    </div>
+</form>
+
+
+<button onclick="update()">Update</button>
 
 </body>
 

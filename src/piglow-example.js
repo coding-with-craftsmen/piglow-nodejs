@@ -72,7 +72,7 @@ seq()
                 piglow.setLed((i % 3 + 1), 'green', data.green);
                 piglow.setLed((i % 3 + 1), 'blue', data.blue);
                 piglow.setLed((i % 3 + 1), 'white', data.white);
-                i++;
+
                 //console.log(i);
                 // Write new state to piglow
                 wire.writeBytes(BYTE_SET_PWM_VALUES, piglow.getPiglowInstruction());
