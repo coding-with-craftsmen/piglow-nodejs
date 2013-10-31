@@ -8,13 +8,15 @@
 <body>
 
 
-
 <script src="http://192.168.1.8:9000/socket.io/socket.io.js"></script>
 <script>
+
+
+
     var socket = io.connect('http://192.168.1.8:9000');
     var i = 0;
 
-    function update(){
+    function update() {
 
         var colorRed = document.getElementById("red").value;
         var colorOrange = document.getElementById("orange").value;
@@ -22,9 +24,56 @@
         var colorGreen = document.getElementById("green").value;
         var colorBlue = document.getElementById("blue").value;
         var colorWhite = document.getElementById("white").value;
-        console.log("colorRed",colorRed);
-        socket.emit('update', {red : colorRed, orange : colorOrange, yellow : colorYellow, green : colorGreen, blue : colorBlue, white : colorWhite });
+        console.log("colorRed", colorRed);
+        socket.emit('update', {red: colorRed, orange: colorOrange, yellow: colorYellow, green: colorGreen, blue: colorBlue, white: colorWhite });
     }
+
+    navigator.getMedia = ( navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia);
+
+    window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
+
+
+    var audioContext = new AudioContext();
+    var analyser = audioContext.createAnalyser();
+    navigator.getMedia(
+
+            // constraints
+            {
+                audio: true
+            },
+
+            // successCallback
+            function (localMediaStream) {
+                var microphone = audioContext.createMediaStreamSource(localMediaStream);
+                microphone.connect(analyser);
+                drawSpectrum();
+            },
+
+            // errorCallback
+            function (err) {
+                console.log("The following error occured: " + err);
+            }
+
+
+
+    );
+
+    function drawSpectrum() {
+        var array =  new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(array);
+
+        var value = 0;
+        for ( var i = 0; i < (array.length); i++ ){
+            value += array[i];
+        }
+        value = parseInt(value / array.length);
+        socket.emit('update', {red: value, orange: value, yellow: value, green: value, blue: value, white: value });
+        audioAnimation = requestAnimationFrame(drawSpectrum);
+    }
+
 
 </script>
 
@@ -48,11 +97,15 @@
     <div>
         <label for="blue">Blue</label>
         <input id="blue" type="range" name="points" min="0" max="255" onchange="update()">
-    </div><div>
+    </div>
+    <div>
         <label for="white">White</label>
         <input id="white" type="range" name="points" min="0" max="255" onchange="update()">
     </div>
 </form>
+
+
+
 
 
 <button onclick="update()">Update</button>
