@@ -32,6 +32,12 @@ var piglow = new function () {
         this['L' + leg][color] = intense;
     };
 
+    this.setColor = function(color, instense){
+        setLed(1,color,instense);
+        setLed(2,color,instense);
+        setLed(3,color,instense);
+    }
+
     // Return piglow led instructions
     this.getPiglowInstruction = function () {
         return  [this.L1.red, this.L1.orange, this.L1.yellow, this.L1.green, this.L2.blue,
@@ -66,12 +72,12 @@ seq()
         io.sockets.on('connection', function (socket) {
             socket.on('update', function (data) {
                 piglow.clear();
-                piglow.setLed((i % 3 + 1), 'red', data.red);
-                piglow.setLed((i % 3 + 1), 'orange', data.orange);
-                piglow.setLed((i % 3 + 1), 'yellow', data.yellow);
-                piglow.setLed((i % 3 + 1), 'green', data.green);
-                piglow.setLed((i % 3 + 1), 'blue', data.blue);
-                piglow.setLed((i % 3 + 1), 'white', data.white);
+                piglow.setColor('red', data.red);
+                piglow.setColor('orange', data.orange);
+                piglow.setColor('yellow', data.yellow);
+                piglow.setColor('green', data.green);
+                piglow.setColor('blue', data.blue);
+                piglow.setColor('white', data.white);
 
                 //console.log(i);
                 // Write new state to piglow
