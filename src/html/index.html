@@ -1,19 +1,23 @@
 <html>
 
 <head>
-<!-- head -->
+    <!-- head -->
 </head>
 
 
 <body>
 
+<button onclick="javascript:update();">Update</button>
+
 <script src="http://192.168.1.8:9000/socket.io/socket.io.js"></script>
 <script>
-  var socket = io.connect('http://192.168.1.8:9000');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
+    var socket = io.connect('http://192.168.1.8:9000');
+    var i = 0;
+
+    function update(){
+        socket.emit('update', {red : 0x22, orange : 0x44, yellow : 0x66, green : 0x88, blue : 0xAA, white : 0xCC });
+    }
+
 </script>
 
 </body>

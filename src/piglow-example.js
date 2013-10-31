@@ -66,8 +66,12 @@ seq()
         io.sockets.on('connection', function (socket) {
             socket.on('update', function (data) {
                 piglow.clear();
-                piglow.setLed((i % 3 + 1), 'red', 0x88);
-                piglow.setLed((i % 3 + 1), 'orange', 0x44);
+                piglow.setLed((i % 3 + 1), 'red', data.red);
+                piglow.setLed((i % 3 + 1), 'orange', data.orange);
+                piglow.setLed((i % 3 + 1), 'yellow', data.yellow);
+                piglow.setLed((i % 3 + 1), 'green', data.green);
+                piglow.setLed((i % 3 + 1), 'blue', data.blue);
+                piglow.setLed((i % 3 + 1), 'white', data.white);
                 i++;
                 //console.log(i);
                 // Write new state to piglow
