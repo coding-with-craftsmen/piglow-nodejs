@@ -1,6 +1,15 @@
 var i2c = require('i2c');
 var seq = require('seq');
 
+var io = require('socket.io').listen(80);
+
+io.sockets.on('connection', function (socket) {
+    socket.emit('news', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+});
+
 var PIGLOW_ADDRESS = 0x54;
 var BYTE_ENABLE_OUTPUT = 0x00;
 var BYTE_ENABLE_LEDS = 0x13;
