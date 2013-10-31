@@ -1,0 +1,21 @@
+<html>
+
+<head>
+<!-- head -->
+</head>
+
+
+<body>
+
+<script src="http://192.168.1.8:9000/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://192.168.1.8:9000');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>
+
+</body>
+
+</html>
