@@ -1,7 +1,7 @@
 var i2c = require('i2c');
 var seq = require('seq');
 
-var io = require('socket.io').listen(80);
+var io = require('socket.io').listen(9000);
 
 
 var PIGLOW_ADDRESS = 0x54;
