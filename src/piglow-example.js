@@ -33,10 +33,10 @@ var piglow = new function () {
     };
 
     this.setColor = function(color, instense){
-        setLed(1,color,instense);
-        setLed(2,color,instense);
-        setLed(3,color,instense);
-    }
+        this.setLed(1,color,instense);
+        this.setLed(2,color,instense);
+        this.setLed(3,color,instense);
+    };
 
     // Return piglow led instructions
     this.getPiglowInstruction = function () {
